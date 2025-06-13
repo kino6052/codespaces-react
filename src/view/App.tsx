@@ -29,14 +29,14 @@ const AppComponent = (props: TProps) => {
     () =>
       mapTiles
         .sort((a, b) => (a.layer || 0) - (b.layer || 0))
-        .map((tile, index) => (
+        .map((tile) => (
           <TileSprite
-            key={`tile-${index}`}
+            key={`tile-${tile.type}-${tile.location[0]}-${tile.location[1]}`}
             location={tile.location as [number, number]}
             asset={tile.type}
           />
         )),
-    []
+    [mapTiles]
   );
 
   const itemTiles = useMemo(
