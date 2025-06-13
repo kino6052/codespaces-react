@@ -6,7 +6,7 @@ interface DragState {
   startPosition: [number, number] | null;
 }
 
-interface WithDragAndDropProps {
+export interface WithDragAndDropProps {
   onDragEnd?: (itemId: string, newPosition: [number, number]) => void;
 }
 

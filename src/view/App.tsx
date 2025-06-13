@@ -1,45 +1,56 @@
-import React, { useEffect } from "react";
+import { useEffect, useState, useMemo, memo } from "react";
+import { DIM, NUM } from "../constants";
+import { mapStateToProps, TProps } from "../mapper";
+import { StateSubject, TState } from "../state";
 import { Character } from "./components/Character";
 import DialogueBox from "./components/DialogueBox";
-import { TileSprite } from "./components/Tile";
-import "./styles.css";
-import {
-  state001,
-  state002,
-  state003,
-  state004,
-  StateSubject,
-  TState,
-} from "../state";
-import { NUM, DIM } from "../constants";
 import { Inventory } from "./components/Inventory";
-import { useState } from "react";
 import { Journal } from "./components/Journal";
-import { generateMap } from "../map/mapData";
+import { SaveLoadButtons, SaveLoadScreen } from "./components/SaveLoad";
+import { TileSprite as TileSpriteBase } from "./components/Tile";
+import "./styles.css";
 
-const AppComponent = (state: TState) => {
-  const { character, characters, dialogue, items } = state;
-  const [inventoryItems, setInventoryItems] = useState(
-    Object.entries(character.inventory || {}).map(([key, item]) => ({
-      id: key,
-      asset: item.asset,
-      position: item.location,
-    }))
+const TileSprite = memo(TileSpriteBase);
+
+const AppComponent = (props: TProps) => {
+  const {
+    mapTiles,
+    items,
+    characters,
+    dialogue,
+    character,
+    journalProps,
+    inventoryProps,
+    saveLoadProps,
+    saveLoadButtonsProps,
+  } = props;
+
+  const sortedTiles = useMemo(
+    () =>
+      mapTiles
+        .sort((a, b) => (a.layer || 0) - (b.layer || 0))
+        .map((tile, index) => (
+          <TileSprite
+            key={`tile-${index}`}
+            location={tile.location as [number, number]}
+            asset={tile.type}
+          />
+        )),
+    []
   );
 
-  const handleInventoryDragEnd = (
-    itemId: string,
-    newPosition: [number, number]
-  ) => {
-    setInventoryItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === itemId ? { ...item, position: newPosition } : item
-      )
-    );
-  };
-
-  // Generate the map once when component mounts
-  const [mapTiles] = useState(generateMap());
+  const itemTiles = useMemo(
+    () =>
+      Object.entries(items).map(([key, item]) => (
+        <TileSprite
+          key={key}
+          location={item.location}
+          asset={item.asset}
+          isHighlighted={item.isHighlighted}
+        />
+      )),
+    [items]
+  );
 
   return (
     <>
@@ -66,24 +77,9 @@ const AppComponent = (state: TState) => {
         }}
       >
         {/* Render the procedural map */}
-        {mapTiles
-          .sort((a, b) => (a.layer || 0) - (b.layer || 0))
-          .map((tile, index) => (
-            <TileSprite
-              key={`tile-${index}`}
-              location={tile.location as [number, number]}
-              asset={tile.type}
-            />
-          ))}
+        {sortedTiles}
 
-        {Object.entries(items).map(([key, item]) => (
-          <TileSprite
-            key={key}
-            location={item.location}
-            asset={item.asset}
-            isHighlighted={item.isHighlighted}
-          />
-        ))}
+        {itemTiles}
         <Character
           location={character.location}
           isMoving={character.isMoving}
@@ -105,13 +101,11 @@ const AppComponent = (state: TState) => {
             characterImage={dialogue.characterImage}
           />
         )}
-        {character.inventory && (
-          <Inventory
-            items={inventoryItems}
-            onDragEnd={handleInventoryDragEnd}
-          />
-        )}
-        {character.journal && <Journal {...character.journal} />}
+        {inventoryProps && <Inventory {...inventoryProps} />}
+        {journalProps && <Journal {...journalProps} />}
+
+        <SaveLoadButtons {...saveLoadButtonsProps} />
+        {saveLoadProps && <SaveLoadScreen {...saveLoadProps} />}
       </div>
     </>
   );
@@ -129,5 +123,5 @@ export default function App() {
     return () => subscription.unsubscribe();
   }, []);
 
-  return <AppComponent {...state} />;
+  return <AppComponent {...mapStateToProps(state)} />;
 }

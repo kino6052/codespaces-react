@@ -3,13 +3,13 @@ import { TileSprite } from "./Tile";
 import { DIM } from "../../constants";
 import { withDragAndDrop } from "../../utils/hocs/withDragAndDrop";
 
-interface InventoryItem {
+export interface InventoryItem {
   id: string;
   asset: string;
   position: [number, number];
 }
 
-interface InventoryProps {
+export interface InventoryProps {
   items: InventoryItem[];
   onDragStart?: (
     e: React.DragEvent,
