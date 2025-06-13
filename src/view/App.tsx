@@ -8,6 +8,7 @@ import { Inventory } from "./components/Inventory";
 import { Journal } from "./components/Journal";
 import { SaveLoadButtons, SaveLoadScreen } from "./components/SaveLoad";
 import { TileSprite as TileSpriteBase } from "./components/Tile";
+import { useMusic } from "../utils/hooks/useMusic";
 import "./styles.css";
 
 const TileSprite = memo(TileSpriteBase);
@@ -24,6 +25,9 @@ const AppComponent = (props: TProps) => {
     saveLoadProps,
     saveLoadButtonsProps,
   } = props;
+
+  // Add music playback with play button
+  const { handlePlay } = useMusic("/music.mp3");
 
   const sortedTiles = useMemo(
     () =>
@@ -54,6 +58,23 @@ const AppComponent = (props: TProps) => {
 
   return (
     <>
+      <button
+        onClick={handlePlay}
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          zIndex: 1000,
+          padding: "10px 20px",
+          backgroundColor: "#4CAF50",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        Play Music
+      </button>
       <div
         style={{
           backgroundImage: "url('/bg.jpg')",

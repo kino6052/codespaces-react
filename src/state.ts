@@ -12,9 +12,14 @@ export type TState = {
         asset: string;
       };
     } | undefined;
-    journal: {
-      title: string,
-      text: string
+    journal: { currentId?: string; } & {
+      entries: {
+        [key: string]: {
+          title: string,
+          text: string,
+          date: number
+        } | undefined;
+      };
     } | undefined;
   };
   characters: {
@@ -217,9 +222,16 @@ export const state004: TState = {
     isMoving: false,
     inventory: undefined,
     journal: {
-      title: 'Diary Entry',
-      text: 'Today I explored the village and met Mr. Robinson. He seems to have an important task for me. I should investigate what he needs help with.'
+      currentId: "001",
+      entries: {
+        "001": {
+          title: 'Diary Entry',
+          text: 'Today I explored the village and met Mr. Robinson. He seems to have an important task for me. I should investigate what he needs help with.',
+          date: 1718313600000
+        }
+      }
     }
+
   },
   characters: {
     "npc-001": {
@@ -244,4 +256,4 @@ export const state004: TState = {
   },
 };
 
-export const StateSubject = new BehaviorSubject<TState>(state002);
+export const StateSubject = new BehaviorSubject<TState>(state001);

@@ -23,10 +23,10 @@ export const mapStateToProps = (state: TState): TProps => {
       isMoving: state.character.isMoving,
       direction: state.character.direction,
     },
-    journalProps: state.character.journal
+    journalProps: state.character.journal && state.character.journal.currentId
       ? {
-        title: state.character.journal?.title || "",
-        text: state.character.journal?.text || "",
+        title: state.character.journal.entries[state.character.journal.currentId]?.title || "",
+        text: state.character.journal.entries[state.character.journal.currentId]?.text || "",
         onNextEntry: () => { },
         onPreviousEntry: () => { },
       }

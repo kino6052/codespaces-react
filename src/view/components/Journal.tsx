@@ -121,7 +121,15 @@ export const Journal: React.FC<TJournalProps> = ({
         >
           Previous
         </button>
-        <span>
+        <span
+          style={{
+            color: "white",
+            fontSize: "14px",
+            background: "#00000099",
+            padding: "4px",
+            borderRadius: "4px",
+          }}
+        >
           Pages {currentSpread * 2 + 1}-
           {Math.min((currentSpread + 1) * 2, totalPages)} of {totalPages}
         </span>
