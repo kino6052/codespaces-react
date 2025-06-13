@@ -1,7 +1,7 @@
 import { memo } from "react";
-import { TileSprite } from "../components/Tile";
-import { DIM } from "../constants";
-import { withDragAndDrop } from "./withDragAndDrop";
+import { TileSprite } from "./Tile";
+import { DIM } from "../../constants";
+import { withDragAndDrop } from "../../utils/hocs/withDragAndDrop";
 
 interface InventoryItem {
   id: string;
@@ -50,7 +50,6 @@ const InventoryComponent = memo(
                   asset="./slot.png"
                   location={[x * DIM, y * DIM]}
                   key={`bg-${x}-${y}`}
-                  plane={0}
                   height={DIM}
                   width={DIM}
                 />
@@ -77,7 +76,6 @@ const InventoryComponent = memo(
             <TileSprite
               asset={item.asset}
               location={[0, 0]}
-              plane={1}
               height={DIM}
               width={DIM}
               isHighlighted

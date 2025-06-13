@@ -1,7 +1,7 @@
 import React from "react";
-import { EDirection } from "../types/direction";
-import { useKeyboardMovement } from "../hooks/useKeyboardMovement";
-import { CharacterSprite } from "./CharacterSprite";
+import { EDirection } from "../../types/direction";
+import { CharacterSprite as CharacterSpriteComponent } from "./CharacterSprite";
+import { withPositioning } from "../../utils/hocs/withPositioning";
 
 //
 // Character Component
@@ -12,6 +12,8 @@ interface CharacterProps {
   isMoving: boolean;
   isHighlighted?: boolean;
 }
+
+const CharacterSprite = withPositioning(CharacterSpriteComponent);
 
 export const Character: React.FC<CharacterProps> = ({
   direction = EDirection.Down,

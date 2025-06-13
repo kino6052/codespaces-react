@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { EDirection } from "../types/direction";
+import { EDirection } from "../../types/direction";
 
 interface UseKeyboardMovementProps {
   step: number;

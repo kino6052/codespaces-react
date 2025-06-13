@@ -1,3 +1,4 @@
+import { BehaviorSubject } from "rxjs";
 import { EDirection } from "./types/direction";
 
 export type TState = {
@@ -242,3 +243,5 @@ export const state004: TState = {
     },
   },
 };
+
+export const StateSubject = new BehaviorSubject<TState>(state001);

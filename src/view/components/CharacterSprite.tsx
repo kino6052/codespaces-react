@@ -1,6 +1,6 @@
 import React from "react";
 import { SpriteAnimation } from "./SpriteAnimation";
-import { EDirection } from "../types/direction";
+import { EDirection } from "../../types/direction";
 
 interface CharacterSpriteProps {
   direction: EDirection;

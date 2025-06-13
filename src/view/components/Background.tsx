@@ -1,6 +1,6 @@
 import { memo } from "react";
-import { TileSprite } from "../components/Tile";
-import { NUM, DIM } from "../constants";
+import { TileSprite } from "./Tile";
+import { NUM, DIM } from "../../constants";
 
 export const Background = memo(() => {
   return (
@@ -15,7 +15,6 @@ export const Background = memo(() => {
                 asset="./grass.png"
                 location={[x * DIM, y * DIM]}
                 key={`${x}-${y}`}
-                plane={0}
                 height={DIM}
                 width={DIM}
               />

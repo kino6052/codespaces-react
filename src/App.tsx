@@ -1,14 +1,20 @@
-import React from "react";
-import { Character } from "./components/Character";
-import DialogueBox from "./components/DialogueBox";
-import { TileSprite } from "./components/Tile";
+import React, { useEffect } from "react";
+import { Character } from "./view/components/Character";
+import DialogueBox from "./view/components/DialogueBox";
+import { TileSprite } from "./view/components/Tile";
 import "./styles.css";
-import { state001, state002, state003, state004, TState } from "./state";
+import {
+  state001,
+  state002,
+  state003,
+  state004,
+  StateSubject,
+  TState,
+} from "./state";
 import { NUM, DIM } from "./constants";
-import { Background } from "./components/Background";
-import { Inventory } from "./components/Inventory";
+import { Inventory } from "./view/components/Inventory";
 import { useState } from "react";
-import { Journal } from "./components/Journal";
+import { Journal } from "./view/components/Journal";
 
 const AppComponent = (state: TState) => {
   const { character, characters, dialogue, items } = state;
@@ -104,5 +110,16 @@ const AppComponent = (state: TState) => {
 };
 
 export default function App() {
-  return <AppComponent {...state004} />;
+  const [state, setState] = useState<TState>(StateSubject.getValue());
+
+  useEffect(() => {
+    const subscription = StateSubject.subscribe((newState) => {
+      console.log("newState", newState);
+      setState(newState);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  return <AppComponent {...state} />;
 }

@@ -1,19 +1,20 @@
 import React from "react";
 import { SpriteTile } from "./SpriteAnimation";
+import { withPositioning } from "../../utils/hocs/withPositioning";
 
 interface ITileSprite {
   asset: string;
   location: [number, number];
-  plane?: number;
   width?: number;
   height?: number;
   isHighlighted?: boolean;
 }
 
+const TileSpriteComponent = withPositioning(SpriteTile);
+
 export const TileSprite: React.FC<ITileSprite> = ({
   asset,
   location,
-  plane = 0,
   width = 64,
   height = 64,
   isHighlighted,
@@ -27,10 +28,9 @@ export const TileSprite: React.FC<ITileSprite> = ({
 
   return (
     <div style={style}>
-      <SpriteTile
+      <TileSpriteComponent
         width={width}
         height={height}
-        plane={plane}
         isHighlighted={isHighlighted}
         extraStyles={{
           backgroundImage: `url(${asset})`,

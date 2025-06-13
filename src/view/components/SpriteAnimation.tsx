@@ -2,13 +2,12 @@
 // SpriteAnimation Component
 
 import React from "react";
-import { useFrameAnimation } from "../hooks/useFrameAnimation";
-import { useSpritePosition } from "../hooks/useSpritePosition";
+import { useFrameAnimation } from "../../utils/hooks/useFrameAnimation";
+import { useSpritePosition } from "../../utils/hooks/useSpritePosition";
 
 interface SpriteTileProps {
   width: number;
   height: number;
-  plane?: number;
   extraStyles?: Record<string, unknown>;
   isHighlighted?: boolean;
 }
@@ -16,7 +15,6 @@ interface SpriteTileProps {
 export const SpriteTile: React.FC<SpriteTileProps> = ({
   width,
   height,
-  plane = 0,
   extraStyles,
   isHighlighted,
 }) => {
@@ -25,7 +23,6 @@ export const SpriteTile: React.FC<SpriteTileProps> = ({
       style={{
         ...extraStyles,
         border: isHighlighted ? "2px dashed aqua" : undefined,
-        zIndex: plane,
         width,
         height,
       }}
@@ -43,7 +40,6 @@ interface SpriteAnimationProps {
   isLooping?: boolean;
   onEnd?: () => void;
   row: number;
-  plane?: number;
   extraStyles?: Record<string, unknown>;
   isSpritesheet?: boolean;
   isHighlighted?: boolean;
@@ -58,7 +54,6 @@ export const SpriteAnimation: React.FC<SpriteAnimationProps> = ({
   fps,
   isPlaying = true,
   isLooping = true,
-  plane = 0,
   onEnd,
   extraStyles,
   isSpritesheet = true,
@@ -69,7 +64,6 @@ export const SpriteAnimation: React.FC<SpriteAnimationProps> = ({
       <SpriteTile
         width={frameWidth}
         height={frameHeight}
-        plane={plane}
         extraStyles={{
           ...extraStyles,
           backgroundImage: `url(${spriteSheet})`,
@@ -99,7 +93,6 @@ export const SpriteAnimation: React.FC<SpriteAnimationProps> = ({
     <SpriteTile
       width={width}
       height={height}
-      plane={plane}
       isHighlighted={isHighlighted}
       extraStyles={{
         ...extraStyles,
