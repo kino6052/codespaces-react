@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { Character } from "./view/components/Character";
-import DialogueBox from "./view/components/DialogueBox";
-import { TileSprite } from "./view/components/Tile";
+import { Character } from "./components/Character";
+import DialogueBox from "./components/DialogueBox";
+import { TileSprite } from "./components/Tile";
 import "./styles.css";
 import {
   state001,
@@ -10,11 +10,11 @@ import {
   state004,
   StateSubject,
   TState,
-} from "./state";
-import { NUM, DIM } from "./constants";
-import { Inventory } from "./view/components/Inventory";
+} from "../state";
+import { NUM, DIM } from "../constants";
+import { Inventory } from "./components/Inventory";
 import { useState } from "react";
-import { Journal } from "./view/components/Journal";
+import { Journal } from "./components/Journal";
 
 const AppComponent = (state: TState) => {
   const { character, characters, dialogue, items } = state;

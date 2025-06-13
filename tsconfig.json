@@ -19,6 +19,6 @@
     "esModuleInterop": true,
     "jsxImportSource": "react"
   },
-  "include": ["src"],
+  "include": ["src", "src/index.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 } 
